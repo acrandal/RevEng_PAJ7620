@@ -496,6 +496,56 @@ const unsigned short setCursorModeRegisterArray[] = {
     0xEF00    // Set Bank 0 (parking it)
 };
 
+/** Generated size of the register set proximity mode array */
+#define SET_PRX_MODE_REG_ARRAY_SIZE (sizeof(setProximityModeRegisterArray)/sizeof(setProximityModeRegisterArray[0]))
+
+/**
+ * Proximity mode specific register addresses and values
+ * \note Puts device into proximity mode with appropriate values.
+ */
+#ifdef PROGMEM_COMPATIBLE
+const unsigned short setProximityModeRegisterArray[] PROGMEM = {
+#else
+const unsigned short setProximityModeRegisterArray[] = {
+#endif
+    0xEF00,       // Bank 0
+    0x4100,       // Disable interrupts for first 8 gestures
+    0x4200,       // Disable wave (and other mode's) interrupt(s)
+    0x483C,
+    0x4900,//
+    0x5113,
+    0x8420,
+    0x8500,
+    0x8610,
+    0x8700,
+    0x8805,
+    0x8918,
+    0x8A10,
+    0x9ff8,
+    0x6996,
+    0x6A02,
+    0xEF01,       // Bank 1
+    0x011E,
+    0x020F,
+    0x0310,
+    0x0402,
+    0x4150,//
+    0x4334,//
+    0x65CE,//
+    0x660B,//
+    0x67CE,//
+    0x680B,//
+    0x69E9,//
+    0x6A05,
+    0x6B50,
+    0x6CC3,
+    0x6D50,
+    0x6EC3,
+    0x7405,       // Set proximity mode
+    0xEF00,       // Bank 0
+    0x41FF,       // Re-enable interrupts for first 8 gestures
+    0x4201        // Re-enable interrupts for wave gesture
+};
 
 /**
  * PAJ7620 Device API class - As developed by RevEng Devs
@@ -516,6 +566,7 @@ class RevEng_PAJ7620
     /**@{*/
     void setGestureMode();          // Put sensor into gesture mode
     void setCursorMode();           // Put sensor into cursor mode
+    void setProximityMode();        // Put sensor into proximity mode
     /**@}*/
 
     void invertXAxis();             // Invert (toggle) sensor's X (vertical) axis
@@ -564,7 +615,8 @@ class RevEng_PAJ7620
 
     /** @name Proxmity mode interface */
     /**@{*/
-    //int getProximityDistance();     // Read an object's "proximity 255..0"
+    int getProximityDistance();     // Read an object's "proximity 255..0"
+    bool getProximityApproach();    // Read an object's approaching to sensor
     /**@}*/
 
   private:

@@ -309,6 +309,19 @@ void RevEng_PAJ7620::setCursorMode()
   writeRegisterArray(setCursorModeRegisterArray, SET_CURSOR_MODE_REG_ARRAY_SIZE);
 }
 
+/**
+ * Puts device into Proximity mode
+ * 
+ * \par
+ * Initializes registers for Proximity mode and enables only the proximity interrupts
+ * 
+ * \param none
+ * \return none
+ */
+void RevEng_PAJ7620::setProximityMode()
+{
+  writeRegisterArray(setProximityModeRegisterArray, SET_PRX_MODE_REG_ARRAY_SIZE);
+}
 
 /**
  * Gets cursor object's current X location
@@ -905,4 +918,37 @@ Corner RevEng_PAJ7620::getCorner()
   else {
     return CORNER_MIDDLE;     // Is in view, but not fully in a corner yet
   }
+}
+
+/**
+ * Read Proximity Value Register
+ * 
+ * \param none
+ * \return int : Proximity Value (0~255)
+ */
+
+ int RevEng_PAJ7620::getProximityDistance(){
+  uint8_t proximity = 0x00;
+  readRegister(PAJ7620_ADDR_S_AVE_Y_BRIGHTNESS, 1, &proximity);
+  return proximity;
+}
+
+/**
+ * Read Proximity Value Register
+ * 
+ * \param none
+ * \return bool : Object approach(true), Not approach(false)
+ */
+
+ bool RevEng_PAJ7620::getProximityApproach(){
+  bool result = false;
+  uint8_t data = 0x00;
+  readRegister(PAJ7620_ADDR_PS_APPROACH_STATE, 1, &data);
+  switch(data)
+  {
+    case 0:   result = false;   break;
+    case 1:  result = true;    break;
+    default:              result = false;   break;
+  }
+  return result;
 }
