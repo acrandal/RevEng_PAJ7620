@@ -3,7 +3,7 @@
 ## Description ##
 
 The library here is for the PAJ7620 sensor with an I2C interface. The device also has several variants such as the PAJ7620U2 and PAJ7620F2.
-The device provides simple motion-based gesture recognition, object tracking (cursor mode), and other (unimplemented so far) modes.
+The device provides simple motion-based gesture recognition, object tracking (cursor mode), and other (unimplemented so far) modes. 
 
 In gesture mode it can recognize 9 hand moving gestures including:
 - move up
