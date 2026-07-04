@@ -17,7 +17,7 @@ jobs:
   "generate_reveng_paj7620_docs":
      runs-on: ubuntu-latest
      steps:
-       - uses: actions/checkout@v2
+       - uses: actions/checkout@v7
        - uses: mattnotmitt/doxygen-action@v1.1.0
          name: Generate docs
          with:
@@ -44,7 +44,7 @@ jobs:
            commit_message: "Publish Docs ${{ env.DEPLOY_DIR }}"
            tag_name: ${{ steps.prepare_tag.outputs.deploy_tag_name }}
            tag_message: "Docs Deployment ${{ steps.prepare_tag.outputs.tag_name }}"
-       - uses: actions/upload-artifact@v2
+       - uses: actions/upload-artifact@v4
          name: Upload all Doxygen artifacts
          with:
            name: doxygen-docs
